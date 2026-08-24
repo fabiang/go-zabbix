@@ -2,6 +2,7 @@ package integration
 
 import (
 	"testing"
+	"time"
 
 	"github.com/fabiang/go-zabbix"
 	"github.com/fabiang/go-zabbix/test"
@@ -35,8 +36,8 @@ func TestEventsIntegration(t *testing.T) {
 			t.Fatalf("Event %d has no Event ID", i)
 		}
 
-		if event.Timestamp().IsZero() {
-			t.Fatalf("Event %d has no timestamp", i)
+		if time.Time(event.Timestamp).Unix() <= 0 {
+			t.Fatalf("Event %d has no timestamp marshaled", i)
 		}
 	}
 

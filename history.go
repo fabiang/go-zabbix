@@ -1,7 +1,10 @@
 package zabbix
 
 import (
+	"encoding/json"
 	"time"
+
+	"github.com/fabiang/go-zabbix/types"
 )
 
 // History represents a Zabbix History returned from the Zabbix API.
@@ -24,14 +27,48 @@ type History struct {
 	// Source is the Windows event log entry source.
 	Source string `json:"source,omitempty"`
 
-	clock       int64 `json:"clock,string"`
-	nanoseconds int64 `json:"ns,string"`
+	// Mapped Clock/Nanoseconds from JSON response
+	Timestamp types.ZBXUnixTimestamp `json:"-"`
 }
 
-// Timestamp returns time.Time depending on the seconds and nanoseconds returned
-// by Zabbix
-func (h *History) Timestamp() time.Time {
-	return time.Unix(h.clock, h.nanoseconds)
+func (h *History) UnmarshalJSON(data []byte) error {
+	type Alias History
+
+	var aux struct {
+		Alias
+		Clock       int64 `json:"clock,string"`
+		Nanoseconds int64 `json:"ns,string"`
+	}
+
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+
+	*h = History(aux.Alias)
+	ts := types.ZBXUnixTimestamp(time.Unix(aux.Clock, aux.Nanoseconds))
+	h.Timestamp = ts
+	return nil
+}
+
+func (h History) MarshalJSON() ([]byte, error) {
+	type Alias History
+
+	var clock, nanoseconds int64
+
+	time := time.Time(h.Timestamp)
+
+	clock = time.Unix()
+	nanoseconds = int64(time.Nanosecond())
+
+	return json.Marshal(&struct {
+		Alias
+		Clock       int64 `json:"clock,string"`
+		Nanoseconds int64 `json:"ns,string"`
+	}{
+		Alias:       Alias(h),
+		Clock:       clock,
+		Nanoseconds: nanoseconds,
+	})
 }
 
 type HistoryGetParams struct {

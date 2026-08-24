@@ -56,7 +56,7 @@ type Trigger struct {
 	Description string `json:"description"`
 
 	// Enabled shows whether the trigger is enabled or disabled.
-	Enabled types.ZBXBoolean `json:"status,string"`
+	Enabled types.ZBXBoolean `json:"status"`
 
 	// Expression is the trigger expression
 	Expression string `json:"expression"`
@@ -137,37 +137,37 @@ type TriggerGetParams struct {
 
 	// InheritedOnly filters search results to triggers which have been
 	// inherited from a template.
-	InheritedOnly bool `json:"inherited,omitempty"`
+	InheritedOnly types.ZBXBoolean `json:"inherited,omitempty"`
 
-	TemplatedOnly bool `json:"templated,omitempty"`
+	TemplatedOnly types.ZBXBoolean `json:"templated,omitempty"`
 
-	MonitoredOnly bool `json:"monitored,omitempty"`
+	MonitoredOnly types.ZBXBoolean `json:"monitored,omitempty"`
 
-	ActiveOnly bool `json:"active,omitempty"`
+	ActiveOnly types.ZBXBoolean `json:"active,omitempty"`
 
-	MaintenanceOnly bool `json:"maintenance,omitempty"`
+	MaintenanceOnly types.ZBXBoolean `json:"maintenance,omitempty"`
 
-	WithUnacknowledgedEventsOnly bool `json:"withUnacknowledgedEvents,omitempty"`
+	WithUnacknowledgedEventsOnly types.ZBXBoolean `json:"withUnacknowledgedEvents,omitempty"`
 
-	WithAcknowledgedEventsOnly bool `json:"withAcknowledgedEvents,omitempty"`
+	WithAcknowledgedEventsOnly types.ZBXBoolean `json:"withAcknowledgedEvents,omitempty"`
 
-	WithLastEventUnacknowledgedOnly bool `json:"withLastEventUnacknowledged,omitempty"`
+	WithLastEventUnacknowledgedOnly types.ZBXBoolean `json:"withLastEventUnacknowledged,omitempty"`
 
-	SkipDependent bool `json:"skipDependent,omitempty"`
+	SkipDependent types.ZBXBoolean `json:"skipDependent,omitempty"`
 
 	// LastChangeSince timestamp `json:"lastChangeSince,omitempty"`
 
 	// LastChangeTill timestamp `json:"lastChangeTill,omitempty"`
 
-	RecentProblemOnly bool `json:"only_true,omitempty"`
+	RecentProblemOnly types.ZBXBoolean `json:"only_true,omitempty"`
 
 	MinSeverity int `json:"min_severity,omitempty"`
 
-	ExpandComment bool `json:"expandComment,omitempty"`
+	ExpandComment types.ZBXBoolean `json:"expandComment,omitempty"`
 
-	ExpandDescription bool `json:"expandDescription,omitempty"`
+	ExpandDescription types.ZBXBoolean `json:"expandDescription,omitempty"`
 
-	ExpandExpression bool `json:"expandExpression,omitempty"`
+	ExpandExpression types.ZBXBoolean `json:"expandExpression,omitempty"`
 
 	// SelectGroups causes all Hostgroups which contain the object that caused each
 	// Trigger to be attached in the search results.

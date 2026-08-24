@@ -64,7 +64,7 @@ type ProxyInterface struct {
 	IP string `json:"ip"`
 
 	// Whether the connection should be made via IP.
-	UseIP types.ZBXBoolean `json:"useip,string"`
+	UseIP types.ZBXBoolean `json:"useip"`
 
 	Port int `json:"port,string"`
 }

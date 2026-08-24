@@ -1,6 +1,9 @@
 package types
 
-import "testing"
+import (
+	"encoding/json"
+	"testing"
+)
 
 func TestBool(t *testing.T) {
 	tests := map[string]bool{
@@ -11,10 +14,14 @@ func TestBool(t *testing.T) {
 	}
 
 	for input, expected := range tests {
-		var data ZBXBoolean
-		data.UnmarshalJSON([]byte(input))
+		var current ZBXBoolean
+		jsonInput, _ := json.Marshal(input)
+		err := json.Unmarshal(jsonInput, &current)
+		if err != nil {
+			t.Error(err)
+		}
 
-		if data != ZBXBoolean(expected) {
+		if current != ZBXBoolean(expected) {
 			t.Errorf("Expected %q to be %t", input, expected)
 		}
 	}

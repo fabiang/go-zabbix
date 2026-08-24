@@ -1,6 +1,7 @@
 package zabbix
 
 import (
+	"encoding/json"
 	"time"
 
 	"github.com/fabiang/go-zabbix/types"
@@ -98,10 +99,7 @@ type Event struct {
 	EventID string `json:"eventid"`
 
 	// Acknowledged indicates if the Event has been acknowledged by an operator.
-	Acknowledged types.ZBXBoolean `json:"acknowledged,string"`
-
-	clock       int64 `json:"clock,string"`
-	nanoseconds int64 `json:"ns,string"`
+	Acknowledged types.ZBXBoolean `json:"acknowledged"`
 
 	// Source is the type of the Event source.
 	//
@@ -132,12 +130,49 @@ type Event struct {
 	// query parameters that returned this Event and the Event Source is one of
 	// EventSourceTrigger or EventSourceDiscoveryRule.
 	Hosts []Host `json:"hosts"`
+
+	// Mapped Clock/Nanoseconds from JSON response
+	Timestamp types.ZBXUnixTimestamp `json:"-"`
 }
 
-// Timestamp returns time.Time depending on the seconds and nanoseconds returned
-// by Zabbix
-func (e *Event) Timestamp() time.Time {
-	return time.Unix(e.clock, e.nanoseconds)
+func (h *Event) UnmarshalJSON(data []byte) error {
+	type Alias Event
+
+	var aux struct {
+		Alias
+		Clock       int64 `json:"clock,string"`
+		Nanoseconds int64 `json:"ns,string"`
+	}
+
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+
+	*h = Event(aux.Alias)
+	ts := types.ZBXUnixTimestamp(time.Unix(aux.Clock, aux.Nanoseconds))
+	h.Timestamp = ts
+	return nil
+}
+
+func (h Event) MarshalJSON() ([]byte, error) {
+	type Alias Event
+
+	var clock, nanoseconds int64
+
+	time := time.Time(h.Timestamp)
+
+	clock = time.Unix()
+	nanoseconds = int64(time.Nanosecond())
+
+	return json.Marshal(&struct {
+		Alias
+		Clock       int64 `json:"clock,string"`
+		Nanoseconds int64 `json:"ns,string"`
+	}{
+		Alias:       Alias(h),
+		Clock:       clock,
+		Nanoseconds: nanoseconds,
+	})
 }
 
 // EventGetParams is query params for event.get call

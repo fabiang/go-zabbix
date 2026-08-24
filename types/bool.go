@@ -2,21 +2,29 @@ package types
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 )
 
 type ZBXBoolean bool
 
 func (bit *ZBXBoolean) UnmarshalJSON(data []byte) error {
-	asString := string(data)
-	if asString == "1" || asString == "true" {
-		*bit = true
-	} else if asString == "0" || asString == "false" {
-		*bit = false
-	} else {
-		return errors.New(fmt.Sprintf("Boolean unmarshal error: invalid input %s", asString))
+	var str string
+	err := json.Unmarshal(data, &str)
+	if err != nil {
+		return err
 	}
+
+	switch str {
+	case "1", "true":
+		*bit = true
+
+	case "0", "false", "":
+		*bit = false
+
+	default:
+		return fmt.Errorf("Boolean unmarshal error. Invalid input %q", str)
+	}
+
 	return nil
 }
 

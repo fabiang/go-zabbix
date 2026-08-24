@@ -1,0 +1,16 @@
+[tools]
+go = "1.20"
+
+[env]
+ZBX_VERSION = "7.4"
+ZBX_VERSION_SUFFIX = "-latest"
+ZBX_DEBUG = 0
+
+[tasks."test-unit"]
+run = 'go test -short "./..."'
+
+[tasks."test-integration"]
+run = 'go test -run Integration "./..."'
+
+[tasks.test]
+depends = ["test-unit", "test-integration"]

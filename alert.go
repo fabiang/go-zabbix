@@ -51,7 +51,7 @@ type Alert struct {
 	AlertType int `json:"alerttype,string"`
 
 	// Timestamp is the UTC timestamp at which the Alert was generated.
-	Timestamp types.ZBXUnixTimestamp `json:"clock,string"`
+	Timestamp types.ZBXUnixTimestamp `json:"clock"`
 
 	// ErrorText is the error message if there was a problem sending a message
 	// or running a remote command.

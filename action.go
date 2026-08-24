@@ -76,7 +76,7 @@ type Action struct {
 	RecoveryMessageEnabled types.ZBXBoolean `json:"recovery_msg,string"`
 
 	// Enabled determines whether the Action is enabled or disabled.
-	Enabled types.ZBXBoolean `json:"status,string"`
+	Enabled types.ZBXBoolean `json:"status"`
 
 	// Conditions are the conditions which must be met for this Action to
 	// execute.
