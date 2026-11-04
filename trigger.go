@@ -172,7 +172,7 @@ type TriggerGetParams struct {
 	// SelectGroups causes all Hostgroups which contain the object that caused each
 	// Trigger to be attached in the search results.
 	//
-	// Deprecated: Depcreated since Zabbix 6.4 and removed in Zabbix 7.2
+	// Deprecated: Deprecated since Zabbix 6.4 and removed in Zabbix 7.2
 	SelectGroups SelectQuery `json:"selectGroups,omitempty"`
 
 	// SelectHosts causes all Hosts which contain the object that caused each

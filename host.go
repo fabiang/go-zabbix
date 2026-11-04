@@ -160,8 +160,12 @@ type HostGetParams struct {
 	// SelectGroups causes the Host Groups that each Host belongs to to be
 	// attached in the search results.
 	//
-	// Deprecated: Depcreated since Zabbix 6.4 and removed in Zabbix 7.2
+	// Deprecated: Deprecated since Zabbix 6.4 and removed in Zabbix 7.2
 	SelectGroups SelectQuery `json:"selectGroups,omitempty"`
+
+	// SelectHostGroups causes the Host Groups that each Host belongs to to be
+	// attached in the search results.
+	SelectHostGroups SelectQuery `json:"selectHostGroups,omitempty"`
 
 	// SelectApplications causes the Applications from each Host to be attached
 	// in the search results.

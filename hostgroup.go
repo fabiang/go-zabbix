@@ -41,12 +41,12 @@ type HostgroupGetParams struct {
 
 	// Return only host groups that contain monitored hosts
 	//
-	// Deprecated: Depcreated since Zabbix 6.4 and removed in Zabbix 7.2
+	// Deprecated: Deprecated since Zabbix 6.4 and removed in Zabbix 7.2
 	MonitoredHosts int `json:"monitored_hosts,omitempty"`
 
 	// Return only host groups that contain hosts
 	//
-	// Deprecated: Depcreated since Zabbix 6.4 and removed in Zabbix 7.2
+	// Deprecated: Deprecated since Zabbix 6.4 and removed in Zabbix 7.2
 	RealHosts int `json:"real_hosts,omitempty"`
 
 	// Return only host groups that contain templates
@@ -84,6 +84,9 @@ type HostgroupGetParams struct {
 
 	// Return only host groups that contain hosts with numeric items
 	WithSimpleGraphItems int `json:"with_simple_graph_items,omitempty"`
+
+	// Return only host groups that contain hosts with monitored numeric items
+	WithMonitoredHosts int `json:"with_monitored_hosts,omitempty"`
 
 	// Return only host groups that contain hosts with triggers
 	WithTriggers int `json:"with_triggers,omitempty"`

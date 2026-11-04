@@ -48,21 +48,20 @@ type MaintenanceGetParams struct {
 	// Return hosts assigned to the maintenance in the hosts property.
 	SelectHosts SelectQuery `json:"selectHosts,omitempty"`
 
-	// Return host groups assigned to the maintenance in the groups property.
-	// Deprecated: Depcreated since Zabbix 6.4 and removed in Zabbix 7.2
+	// SelectGroups:Return host groups assigned to the maintenance in the groups property.
+	// Deprecated: Deprecated since Zabbix 5.4 and removed in Zabbix 7.2
 	SelectGroups SelectQuery `json:"selectGroups,omitempty"`
+
+	// SelectHostGroups: Return host groups assigned to the maintenance in the groups property.
+	SelectHostGroups SelectQuery `json:"selectHostGroups,omitempty"`
 
 	// Return only maintenances with the given IDs.
 	Maintenanceids []string `json:"maintenanceids,omitempty"`
 
 	// Return only maintenances that are assigned to the given hosts.
-	//
-	// Deprecated: Depcreated since Zabbix 6.4 and removed in Zabbix 7.2
 	Hostids []string `json:"hostids,omitempty"`
 
 	// Return only maintenances that are assigned to the given host groups.
-	//
-	// Deprecated: Depcreated since Zabbix 6.4 and removed in Zabbix 7.2
 	Groupids []string `json:"groupids,omitempty"`
 }
 
